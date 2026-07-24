@@ -14,10 +14,11 @@ class PengajuanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mentor_id' => 'required|exists:mentor_profils,id',
+            'mentor_id' => 'required|exists:profil_mentor,id',
+            'kategori_id' => 'nullable|exists:kategori_keahlian,id',
             'jadwal_id' => [
                 'required',
-                'exists:jadwals,id,tersedia,1',
+                'exists:jadwal,id,tersedia,1',
                 function ($attribute, $value, $fail) {
                     $jadwal = \App\Models\Jadwal::find($value);
                     if ($jadwal && $jadwal->mentor_id != request('mentor_id')) {
@@ -25,7 +26,20 @@ class PengajuanRequest extends FormRequest
                     }
                 },
             ],
-            'jam' => 'required|date_format:H:i',
+            'jam' => [
+                'required',
+                'date_format:H:i',
+                function ($attribute, $value, $fail) {
+                    $exists = \App\Models\PengajuanMentoring::where('mentor_id', request('mentor_id'))
+                        ->where('tanggal', request('tanggal'))
+                        ->where('jam', $value)
+                        ->whereIn('status', ['pending', 'disetujui'])
+                        ->exists();
+                    if ($exists) {
+                        $fail('Slot waktu ini sudah dipesan oleh mahasiswa lain.');
+                    }
+                },
+            ],
             'tanggal' => 'required|date',
             'judul' => 'required|string|max:200',
             'deskripsi' => 'required|string|min:10|max:2000',

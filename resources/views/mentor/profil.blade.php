@@ -20,7 +20,7 @@
                     @endif
                 </div>
                 <h5 class="mt-3 mb-1 fw-bold">
-                    {{ $profil && $profil->gelar ? $profil->gelar . '. ' : '' }}{{ auth()->user()->nama }}
+                    {{ auth()->user()->nama }}{{ $profil && $profil->gelar ? ', ' . $profil->gelar : '' }}
                 </h5>
                 <p class="text-muted mb-2" style="font-size: .85rem;">
                     <i class="bi bi-envelope me-1"></i>{{ auth()->user()->email }}

@@ -17,10 +17,10 @@ class ChatController extends Controller
         $user = auth()->user();
         $this->authorizeAccess($pengajuan, $user);
 
-        $pengajuan->load('mahasiswa', 'mentorProfil.user');
+        $pengajuan->load('mahasiswa.mahasiswaProfil', 'mentorProfil.user');
 
         $partnerName = $user->peran === 'mahasiswa'
-            ? ($pengajuan->mentorProfil->gelar ? $pengajuan->mentorProfil->gelar . '. ' : '') . $pengajuan->mentorProfil->user->nama
+            ? $pengajuan->mentorProfil->user->nama . ($pengajuan->mentorProfil->gelar ? ', ' . $pengajuan->mentorProfil->gelar : '')
             : $pengajuan->mahasiswa->nama;
 
         $messages = Chat::where('pengajuan_id', $pengajuan->id)

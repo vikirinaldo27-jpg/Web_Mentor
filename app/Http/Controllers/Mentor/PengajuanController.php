@@ -16,7 +16,7 @@ class PengajuanController extends Controller
         abort_unless($profil, 403, 'Lengkapi profil mentor terlebih dahulu.');
 
         $pengajuans = PengajuanMentoring::where('mentor_id', $profil->id)
-            ->with('mahasiswa', 'kategori')
+            ->with('mahasiswa.mahasiswaProfil', 'kategori')
             ->latest()
             ->paginate(10);
 
@@ -29,7 +29,7 @@ class PengajuanController extends Controller
         abort_unless($profil, 403);
         abort_if($pengajuan->mentor_id !== $profil->id, 403);
 
-        $pengajuan->load('mahasiswa', 'kategori', 'sesiMentorings');
+        $pengajuan->load('mahasiswa.mahasiswaProfil', 'kategori');
 
         return view('mentor.pengajuan-show', compact('pengajuan'));
     }

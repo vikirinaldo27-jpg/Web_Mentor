@@ -9,7 +9,7 @@
             <div class="card-body text-center p-4">
                 @if ($mentor->foto)
                     <img src="{{ asset('storage/' . $mentor->foto) }}"
-                         class="rounded-circle border border-3 border-primary"
+                         class="rounded-circle border border-3 border-primary d-block mx-auto"
                          style="width: 120px; height: 120px; object-fit: cover;">
                 @else
                     <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto border border-3 border-primary"
@@ -19,7 +19,7 @@
                 @endif
 
                 <h5 class="fw-bold mt-3 mb-0">
-                    {{ $mentor->gelar ? $mentor->gelar . '. ' : '' }}{{ $mentor->user->nama }}
+                    {{ $mentor->user->nama }}{{ $mentor->gelar ? ', ' . $mentor->gelar : '' }}
                 </h5>
 
                 @if ($mentor->status_verifikasi === 'terverifikasi')

@@ -31,6 +31,7 @@ class PengajuanController extends Controller
 
     public function create(MentorProfil $mentor): View
     {
+        $mentor->load('keahlians');
         $jadwals = Jadwal::where('mentor_id', $mentor->id)
             ->where('tersedia', true)
             ->where('tanggal', '>=', now()->today())
@@ -74,6 +75,11 @@ class PengajuanController extends Controller
         $data = $request->validated();
         $data['mahasiswa_id'] = auth()->id();
         $data['status'] = 'pending';
+
+        if (empty($data['kategori_id'])) {
+            $mentor = MentorProfil::with('keahlians')->find($data['mentor_id']);
+            $data['kategori_id'] = $mentor?->keahlians->first()?->kategori_id;
+        }
 
         PengajuanMentoring::create($data);
 

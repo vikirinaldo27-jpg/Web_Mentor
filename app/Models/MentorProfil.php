@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MentorProfil extends Model
 {
-    protected $table = 'mentor_profils';
+    protected $table = 'profil_mentor';
 
     protected $fillable = [
         'user_id',
@@ -41,7 +41,7 @@ class MentorProfil extends Model
 
     public function kategoriKeahlians()
     {
-        return $this->belongsToMany(KategoriKeahlian::class, 'keahlians', 'mentor_id', 'kategori_id')
+        return $this->belongsToMany(KategoriKeahlian::class, 'keahlian', 'mentor_id', 'kategori_id')
             ->withPivot('tingkat_keahlian', 'deskripsi')
             ->withTimestamps();
     }

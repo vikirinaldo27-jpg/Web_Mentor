@@ -17,31 +17,32 @@ class CariMentorController extends Controller
         $kategoriId = $request->kategori;
         $perPage = 9;
 
-        $query = DB::table('mentor_profils')
-            ->select('mentor_profils.id', 'mentor_profils.user_id')
-            ->join('users', 'users.id', '=', 'mentor_profils.user_id')
-            ->leftJoin('keahlians', 'keahlians.mentor_id', '=', 'mentor_profils.id')
-            ->leftJoin('kategori_keahlians', 'kategori_keahlians.id', '=', 'keahlians.kategori_id')
+        $query = DB::table('profil_mentor')
+            ->select('profil_mentor.id', 'profil_mentor.user_id')
+            ->join('users', 'users.id', '=', 'profil_mentor.user_id')
+            ->leftJoin('keahlian', 'keahlian.mentor_id', '=', 'profil_mentor.id')
+            ->leftJoin('kategori_keahlian', 'kategori_keahlian.id', '=', 'keahlian.kategori_id')
             ->where('users.peran', 'mentor');
 
         if ($keyword) {
             $query->where(function ($q) use ($keyword) {
                 $q->where('users.nama', 'like', "%{$keyword}%")
-                  ->orWhere('kategori_keahlians.nama', 'like', "%{$keyword}%")
-                  ->orWhere('mentor_profils.universitas', 'like', "%{$keyword}%")
-                  ->orWhere('mentor_profils.perusahaan', 'like', "%{$keyword}%")
-                  ->orWhere('mentor_profils.pengalaman', 'like', "%{$keyword}%");
+                  ->orWhere('kategori_keahlian.nama', 'like', "%{$keyword}%")
+                  ->orWhere('profil_mentor.universitas', 'like', "%{$keyword}%")
+                  ->orWhere('profil_mentor.perusahaan', 'like', "%{$keyword}%")
+                  ->orWhere('profil_mentor.pengalaman', 'like', "%{$keyword}%");
             });
         }
 
         if ($kategoriId) {
-            $query->where('keahlians.kategori_id', $kategoriId);
+            $query->where('keahlian.kategori_id', $kategoriId);
         }
 
-        $idsQuery = $query->distinct()->select('mentor_profils.id');
+        $idsQuery = $query->distinct()->select('profil_mentor.id');
 
         $mentors = MentorProfil::with(['user', 'keahlians.kategori'])
             ->whereIn('id', $idsQuery)
+            ->orderBy('created_at', 'desc')
             ->paginate($perPage);
 
         $kategoris = KategoriKeahlian::orderBy('nama')->get();

@@ -47,7 +47,7 @@
                                                 @endif
                                         <div>
                                             <div class="fw-semibold" style="font-size: .9rem;">
-                                                {{ $p->mentorProfil->gelar ? $p->mentorProfil->gelar . '. ' : '' }}{{ $p->mentorProfil->user->nama }}
+                                                {{ $p->mentorProfil->user->nama }}{{ $p->mentorProfil->gelar ? ', ' . $p->mentorProfil->gelar : '' }}
                                             </div>
                                             <div class="text-muted" style="font-size: .75rem;">{{ $p->mentorProfil->perusahaan ?? $p->mentorProfil->universitas }}</div>
                                         </div>
@@ -120,7 +120,7 @@
                                                 <div class="modal-body" style="padding: 1rem 1.5rem;">
                                                     <p class="text-muted mb-3" style="font-size: .9rem;">
                                                         Konsultasi dengan
-                                                        <strong>{{ $p->mentorProfil->gelar ? $p->mentorProfil->gelar . '. ' : '' }}{{ $p->mentorProfil->user->nama }}</strong>
+                                                        <strong>{{ $p->mentorProfil->user->nama }}{{ $p->mentorProfil->gelar ? ', ' . $p->mentorProfil->gelar : '' }}</strong>
                                                         sudah selesai. Berikan penilaian Anda.
                                                     </p>
 

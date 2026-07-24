@@ -23,7 +23,7 @@
                     @endif
                     <div>
                         <h6 class="fw-bold mb-0">
-                            {{ $mentor->gelar ? $mentor->gelar . '. ' : '' }}{{ $mentor->user->nama }}
+                            {{ $mentor->user->nama }}{{ $mentor->gelar ? ', ' . $mentor->gelar : '' }}
                         </h6>
                         <p class="text-muted mb-0" style="font-size: .85rem;">
                             @if ($mentor->perusahaan)
@@ -42,7 +42,7 @@
                         </div>
                         <h6 class="fw-bold">Belum Ada Jadwal Tersedia</h6>
                         <p class="text-muted mx-auto" style="max-width: 400px; font-size: .9rem;">
-                            <strong>{{ $mentor->gelar ? $mentor->gelar . '. ' : '' }}{{ $mentor->user->nama }}</strong>
+                            <strong>{{ $mentor->user->nama }}{{ $mentor->gelar ? ', ' . $mentor->gelar : '' }}</strong>
                             belum menambahkan jadwal konsultasi. Silakan cek kembali nanti atau cari mentor lain.
                         </p>
                         <div class="d-flex gap-2 justify-content-center mt-3">
@@ -55,6 +55,7 @@
                     <form method="POST" action="{{ route('mahasiswa.pengajuan.store') }}">
                         @csrf
                         <input type="hidden" name="mentor_id" value="{{ $mentor->id }}">
+                        <input type="hidden" name="kategori_id" value="{{ $mentor->keahlians->first()?->kategori_id }}">
 
                         <div class="row g-3">
                             <div class="col-12">

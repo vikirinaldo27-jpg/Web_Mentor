@@ -122,7 +122,7 @@
                                                 </div>
                                             </td>
                                             <td style="font-size: .85rem;">{{ Str::limit($p->judul, 25) }}</td>
-                                            <td><span class="badge bg-light text-dark" style="font-size: .75rem;">{{ $p->judul }}</span></td>
+                                            <td><span class="badge bg-light text-dark" style="font-size: .75rem;">{{ $p->kategori->nama ?? '—' }}</span></td>
                                             <td>
                                                 @php
                                                     $badge = match($p->status) {

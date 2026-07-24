@@ -72,7 +72,7 @@
                         <div class="mb-3">
                             @if ($mentor->foto)
                                 <img src="{{ asset('storage/' . $mentor->foto) }}"
-                                     class="rounded-circle border border-2 border-primary"
+                                     class="rounded-circle border border-2 border-primary d-block mx-auto"
                                      style="width: 80px; height: 80px; object-fit: cover;">
                             @else
                                 <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto border border-2 border-primary"
@@ -83,7 +83,7 @@
                         </div>
 
                         <h6 class="fw-bold mb-0">
-                            {{ $mentor->gelar ? $mentor->gelar . '. ' : '' }}{{ $mentor->user->nama }}
+                            {{ $mentor->user->nama }}{{ $mentor->gelar ? ', ' . $mentor->gelar : '' }}
                         </h6>
 
                         @if ($mentor->status_verifikasi === 'terverifikasi')

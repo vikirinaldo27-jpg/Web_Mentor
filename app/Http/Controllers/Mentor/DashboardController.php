@@ -36,7 +36,7 @@ class DashboardController extends Controller
             $jumlahUlasan = Ulasan::where('mentor_id', $profil->id)->count();
 
             $pengajuanTerbaru = (clone $pengajuansQuery)
-                ->with('mahasiswa', 'kategori')
+                ->with('mahasiswa.mahasiswaProfil', 'kategori')
                 ->latest()
                 ->take(5)
                 ->get();

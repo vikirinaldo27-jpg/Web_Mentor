@@ -14,7 +14,7 @@ class UlasanController extends Controller
         abort_unless($profil, 403, 'Lengkapi profil mentor terlebih dahulu.');
 
         $ulasans = Ulasan::where('mentor_id', $profil->id)
-            ->with('mahasiswa', 'pengajuan.kategori')
+            ->with('mahasiswa.mahasiswaProfil', 'pengajuan.kategori')
             ->latest()
             ->paginate(10);
 
